@@ -1,0 +1,136 @@
+2024-06-08 00:35:01,860 ERROR: Exception on /pictures/picture_search [POST] [in /Users/bai/miniconda3/envs/fish/lib/python3.12/site-packages/flask/app.py:838]
+Traceback (most recent call last):
+  File "/Users/bai/miniconda3/envs/fish/lib/python3.12/site-packages/sqlalchemy/engine/result.py", line 199, in _key_not_found
+    self._key_fallback(key, None)
+  File "/Users/bai/miniconda3/envs/fish/lib/python3.12/site-packages/sqlalchemy/engine/result.py", line 138, in _key_fallback
+    raise KeyError(key) from err
+KeyError: 'to_dict'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/bai/miniconda3/envs/fish/lib/python3.12/site-packages/flask/app.py", line 1473, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/bai/miniconda3/envs/fish/lib/python3.12/site-packages/flask/app.py", line 882, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/bai/miniconda3/envs/fish/lib/python3.12/site-packages/flask_cors/extension.py", line 178, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+                                                ^^^^^^^^^^^^^^^^^^
+  File "/Users/bai/miniconda3/envs/fish/lib/python3.12/site-packages/flask/app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/bai/miniconda3/envs/fish/lib/python3.12/site-packages/flask/app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/bai/Desktop/2024/FishQuery-Back/controllers/picture_controller.py", line 329, in get_fish_by_picture
+    'fish_list': [fish.to_dict() for fish in top_k_fish]
+                  ^^^^^^^^^^^^
+  File "lib/sqlalchemy/cyextension/resultproxy.pyx", line 66, in sqlalchemy.cyextension.resultproxy.BaseRow.__getattr__
+  File "lib/sqlalchemy/cyextension/resultproxy.pyx", line 63, in sqlalchemy.cyextension.resultproxy.BaseRow._get_by_key_impl
+  File "/Users/bai/miniconda3/envs/fish/lib/python3.12/site-packages/sqlalchemy/engine/result.py", line 201, in _key_not_found
+    raise AttributeError(ke.args[0]) from ke
+AttributeError: to_dict
+2024-06-08 00:36:04,565 ERROR: Exception on /pictures/picture_search [POST] [in /Users/bai/miniconda3/envs/fish/lib/python3.12/site-packages/flask/app.py:838]
+Traceback (most recent call last):
+  File "/Users/bai/miniconda3/envs/fish/lib/python3.12/site-packages/sqlalchemy/engine/result.py", line 199, in _key_not_found
+    self._key_fallback(key, None)
+  File "/Users/bai/miniconda3/envs/fish/lib/python3.12/site-packages/sqlalchemy/engine/result.py", line 138, in _key_fallback
+    raise KeyError(key) from err
+KeyError: 'to_dict'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/bai/miniconda3/envs/fish/lib/python3.12/site-packages/flask/app.py", line 1473, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/bai/miniconda3/envs/fish/lib/python3.12/site-packages/flask/app.py", line 882, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/bai/miniconda3/envs/fish/lib/python3.12/site-packages/flask_cors/extension.py", line 178, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+                                                ^^^^^^^^^^^^^^^^^^
+  File "/Users/bai/miniconda3/envs/fish/lib/python3.12/site-packages/flask/app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/bai/miniconda3/envs/fish/lib/python3.12/site-packages/flask/app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/bai/Desktop/2024/FishQuery-Back/controllers/picture_controller.py", line 329, in get_fish_by_picture
+    'fish_list': [fish.to_dict() for fish in top_k_fish]
+                  ^^^^^^^^^^^^
+  File "lib/sqlalchemy/cyextension/resultproxy.pyx", line 66, in sqlalchemy.cyextension.resultproxy.BaseRow.__getattr__
+  File "lib/sqlalchemy/cyextension/resultproxy.pyx", line 63, in sqlalchemy.cyextension.resultproxy.BaseRow._get_by_key_impl
+  File "/Users/bai/miniconda3/envs/fish/lib/python3.12/site-packages/sqlalchemy/engine/result.py", line 201, in _key_not_found
+    raise AttributeError(ke.args[0]) from ke
+AttributeError: to_dict
+2024-06-08 00:36:29,935 ERROR: Exception on /pictures/picture_search [POST] [in /Users/bai/miniconda3/envs/fish/lib/python3.12/site-packages/flask/app.py:838]
+Traceback (most recent call last):
+  File "/Users/bai/miniconda3/envs/fish/lib/python3.12/site-packages/sqlalchemy/engine/result.py", line 199, in _key_not_found
+    self._key_fallback(key, None)
+  File "/Users/bai/miniconda3/envs/fish/lib/python3.12/site-packages/sqlalchemy/engine/result.py", line 138, in _key_fallback
+    raise KeyError(key) from err
+KeyError: 'to_dict'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/bai/miniconda3/envs/fish/lib/python3.12/site-packages/flask/app.py", line 1473, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/bai/miniconda3/envs/fish/lib/python3.12/site-packages/flask/app.py", line 882, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/bai/miniconda3/envs/fish/lib/python3.12/site-packages/flask_cors/extension.py", line 178, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+                                                ^^^^^^^^^^^^^^^^^^
+  File "/Users/bai/miniconda3/envs/fish/lib/python3.12/site-packages/flask/app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/bai/miniconda3/envs/fish/lib/python3.12/site-packages/flask/app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/bai/Desktop/2024/FishQuery-Back/controllers/picture_controller.py", line 329, in get_fish_by_picture
+    'fish_list': [fish.to_dict() for fish in top_k_fish]
+                  ^^^^^^^^^^^^
+  File "lib/sqlalchemy/cyextension/resultproxy.pyx", line 66, in sqlalchemy.cyextension.resultproxy.BaseRow.__getattr__
+  File "lib/sqlalchemy/cyextension/resultproxy.pyx", line 63, in sqlalchemy.cyextension.resultproxy.BaseRow._get_by_key_impl
+  File "/Users/bai/miniconda3/envs/fish/lib/python3.12/site-packages/sqlalchemy/engine/result.py", line 201, in _key_not_found
+    raise AttributeError(ke.args[0]) from ke
+AttributeError: to_dict
+2024-06-08 00:39:19,913 ERROR: Exception on /pictures/picture_search [POST] [in /Users/bai/miniconda3/envs/fish/lib/python3.12/site-packages/flask/app.py:838]
+Traceback (most recent call last):
+  File "/Users/bai/miniconda3/envs/fish/lib/python3.12/site-packages/sqlalchemy/engine/result.py", line 199, in _key_not_found
+    self._key_fallback(key, None)
+  File "/Users/bai/miniconda3/envs/fish/lib/python3.12/site-packages/sqlalchemy/engine/result.py", line 138, in _key_fallback
+    raise KeyError(key) from err
+KeyError: 'id'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/bai/miniconda3/envs/fish/lib/python3.12/site-packages/flask/app.py", line 1473, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/bai/miniconda3/envs/fish/lib/python3.12/site-packages/flask/app.py", line 882, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/bai/miniconda3/envs/fish/lib/python3.12/site-packages/flask_cors/extension.py", line 178, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+                                                ^^^^^^^^^^^^^^^^^^
+  File "/Users/bai/miniconda3/envs/fish/lib/python3.12/site-packages/flask/app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/bai/miniconda3/envs/fish/lib/python3.12/site-packages/flask/app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/bai/Desktop/2024/FishQuery-Back/controllers/picture_controller.py", line 340, in get_fish_by_picture
+    fish_res['id'] = fish.id
+                     ^^^^^^^
+  File "lib/sqlalchemy/cyextension/resultproxy.pyx", line 66, in sqlalchemy.cyextension.resultproxy.BaseRow.__getattr__
+  File "lib/sqlalchemy/cyextension/resultproxy.pyx", line 63, in sqlalchemy.cyextension.resultproxy.BaseRow._get_by_key_impl
+  File "/Users/bai/miniconda3/envs/fish/lib/python3.12/site-packages/sqlalchemy/engine/result.py", line 201, in _key_not_found
+    raise AttributeError(ke.args[0]) from ke
+AttributeError: id
