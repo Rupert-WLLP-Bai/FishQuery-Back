@@ -1,10 +1,13 @@
 from datetime import datetime, timezone
 
 from flask import Blueprint, request, jsonify
-from model import Favorite, Fish, User
+from model import Favorite, Fish, User, FishType
 from app import db
 
 favorite_bp = Blueprint('favorite', __name__, url_prefix='/favorites')
+
+from sqlalchemy import func
+
 
 @favorite_bp.route('/', methods=['GET'])
 def get_user_favorites():
@@ -18,15 +21,37 @@ def get_user_favorites():
     JSON 格式的响应,包含以下字段:
     - message (str): 状态消息
     - success (bool): 是否成功
-    - favorites (list): 收藏夹列表,每个元素是一个字典,包含鱼类信息
+    - favorites (list): 收藏夹列表,每个元素是一个字典,包含鱼类的 id、fish_type_id、image_url、created_at 以及 tags、name_cn 和 name_latin
     """
     try:
         user_id = request.args.get('user_id')
 
         # 获取用户的收藏夹
-        favorites = Favorite.query.filter_by(user_id=user_id).all()
+        favorites = (
+            db.session.query(
+                Favorite.id, Favorite.user_id, Favorite.fish_id,
+                Fish.fish_type_id, Fish.image_url, Fish.created_at, Fish.tags,
+                FishType.name_cn, FishType.name_latin
+            )
+            .join(Fish, Favorite.fish_id == Fish.id)
+            .join(FishType, Fish.fish_type_id == FishType.id)
+            .filter(Favorite.user_id == user_id)
+            .all()
+        )
+
         favorite_info = [
-            favorite.to_dict() for favorite in favorites
+            {
+                'id': favorite.id,
+                'user_id': favorite.user_id,
+                'fish_id': favorite.fish_id,
+                'fish_type_id': favorite.fish_type_id,
+                'image_url': favorite.image_url,
+                'created_at': favorite.created_at,
+                'tags': favorite.tags,
+                'name_cn': favorite.name_cn,
+                'name_latin': favorite.name_latin
+            }
+            for favorite in favorites
         ]
 
         return jsonify({
@@ -60,7 +85,7 @@ def add_to_favorites():
     try:
         #获取前端数据
         data = request.get_json()
-        user_id= data.get('user_id')
+        user_id = data.get('user_id')
         fish_id = data.get('fish_id')
 
         # 检查是否已经收藏过该鱼类
@@ -106,8 +131,8 @@ def remove_from_favorites():
     """
     try:
 
-        data = request.get_json()
-        favorite_id = data.get('favorite_id')
+        favorite_id = request.args.get('favorite_id')
+        # favorite_id = data.get('favorite_id')
 
         # 查找要删除的收藏夹项目
         favorite = Favorite.query.filter_by(id=favorite_id).first()

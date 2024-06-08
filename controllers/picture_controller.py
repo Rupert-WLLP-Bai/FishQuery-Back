@@ -336,6 +336,7 @@ def get_fish_by_picture():
 
     fish_res_list = []
 
+    '''
     for fish, fish_type in top_k_fish:
         fish_res['id'] = fish.id
         fish_res['fish_type_id'] = fish.fish_type_id
@@ -347,6 +348,21 @@ def get_fish_by_picture():
         fish_res['name_latin'] = fish_type.name_latin
         fish_res['description'] = fish_type.description
         fish_res_list.append(fish_res)
+    '''
+    for fish, fish_type in top_k_fish:
+        fish_res = {
+            'id': fish.id,
+            'fish_type_id': fish.fish_type_id,
+            'image_url': fish.image_url,
+            'tags': fish.tags,
+            'uploaded_by': fish.uploaded_by,
+            'created_at': fish.created_at,
+            'name_cn': fish_type.name_cn,
+            'name_latin': fish_type.name_latin,
+            'description': fish_type.description
+        }
+        fish_res_list.append(fish_res)
+
 
     # 获取返回值
     return jsonify({
