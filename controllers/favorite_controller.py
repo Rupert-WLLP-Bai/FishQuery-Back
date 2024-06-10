@@ -6,7 +6,7 @@ from app import db
 
 favorite_bp = Blueprint('favorite', __name__, url_prefix='/favorites')
 
-from sqlalchemy import func
+# from sqlalchemy import func
 
 
 @favorite_bp.route('/', methods=['GET'])

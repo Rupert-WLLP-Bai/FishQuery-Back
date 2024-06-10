@@ -57,7 +57,7 @@ def upload_picture():
 
     # 上传文件到 OSS
     try:
-        image_url = oss_client.upload_file(os.path.join('uploads', filename), file.read())
+        image_url = oss_client.upload_file(filename, file.read())
     except Exception as e:
         return jsonify({'message': str(e), 'success': False}), 500
 
@@ -317,10 +317,11 @@ def get_fish_by_picture():
     # 记录搜索历史
     search_history = SearchHistory(
         user_id=user_id,  # 当前用户 ID
-        search_method=2,  # 0: image, 1: name, 2: tags
+        search_method=0,  # 0: image, 1: name, 2: tags
         search_content="图片搜索"
     )
     db.session.add(search_history)
+    db.session.commit()
 
     fish_res = {
         'id': 0,
@@ -363,6 +364,7 @@ def get_fish_by_picture():
         }
         fish_res_list.append(fish_res)
 
+    fish_res_list.reverse()
 
     # 获取返回值
     return jsonify({
