@@ -4,7 +4,7 @@ from flask import Blueprint, jsonify, request
 from sqlalchemy.exc import SQLAlchemyError
 
 from app import db
-from model import Record, Fish, SearchHistory
+from model import Record, Fish, SearchHistory, User, FishType
 from datetime import datetime, timezone
 
 records_bp = Blueprint('records', __name__, url_prefix='/record')
@@ -36,16 +36,40 @@ def get_all_records():
 def get_pending_records():
     try:
         # 获取所有 is_approved 字段为 False 的 Record 记录,并按照创建时间倒序排列
-        pending_records = Record.query.filter_by(reviewed_at=None).order_by(Record.created_at.desc()).all()
+        #pending_records = Record.query.filter_by(reviewed_at=None).order_by(Record.created_at.desc()).all()
 
         # 将 Record 对象转换为 JSON 格式
+        #data = []
+        #for record in pending_records:
+        #    record_dict = record.to_dict()
+        #    data.append(record_dict)
+        # 使用连表查询获取所有pending的record
+        pending_records = db.session.query(Record, User, FishType) \
+            .join(User, Record.user_id == User.id) \
+            .join(FishType, Record.fish_type_id == FishType.id) \
+            .filter(Record.reviewed_at == None) \
+            .order_by(Record.created_at.desc()) \
+            .all()
+
         data = []
-        for record in pending_records:
-            record_dict = record.to_dict()
-            # 手动处理 datetime 对象
-            # record_dict['created_at'] = record_dict['created_at'].isoformat()
-            # record_dict['reviewed_at'] = record_dict['reviewed_at'].isoformat()
+        for record, user, fish_type in pending_records:
+            record_dict = {
+                'id': record.id,
+                'user_id': record.user_id,
+                'username': user.username,
+                'image_url': record.image_url,
+                'fish_type_id': record.fish_type_id,
+                'name_cn': fish_type.name_cn,
+                'name_latin': fish_type.name_latin,
+                'tags': record.tags,
+                'is_approved': record.is_approved,
+                'reviewed_by': record.reviewed_by,
+                'reviewed_at': record.reviewed_at.isoformat() if record.reviewed_at else None,
+                'feedback': record.feedback,
+                'created_at': record.created_at.isoformat()
+            }
             data.append(record_dict)
+
 
         return jsonify({'message': 'Records found', 'success': True, 'records': data}), 200
     except Exception as e:
@@ -176,12 +200,33 @@ def get_user_search_history():
     try:
 
         # 获取用户的搜索历史记录
-        search_history = SearchHistory.query.order_by(SearchHistory.search_at.desc()).all()
+        search_history = (
+            SearchHistory.query
+            .join(User, SearchHistory.user_id == User.id)
+            .order_by(SearchHistory.search_at.desc())
+            .add_columns(SearchHistory.id, User.username, SearchHistory.search_method, SearchHistory.search_content,
+                         SearchHistory.search_at)
+            .all()
+        )
 
         # 构建响应数据
         history_data = []
-        for record in search_history:
-            history_data.append(record.to_dict())
+        for record, id, username, search_method, search_content, search_at in search_history:
+            # 根据 search_method 值返回中文
+            search_method_text = {
+                0: '图片搜索',
+                1: '鱼名搜索',
+                2: '关键词搜索'
+            }.get(search_method, '未知搜索方式')
+
+            history_data.append({
+                'id': id,
+                'user_id': record.user_id,
+                'username': username,
+                'search_method': search_method_text,
+                'search_content': search_content,
+                'search_at': search_at.isoformat()
+            })
 
         return jsonify({
             'message': 'Search history retrieved',
