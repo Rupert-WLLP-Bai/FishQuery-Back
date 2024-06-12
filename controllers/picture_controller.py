@@ -6,6 +6,7 @@ import numpy as np
 import sqlalchemy
 from flask import Blueprint, request, jsonify, current_app, session
 from sqlalchemy import func
+from sqlalchemy.sql.operators import or_
 from werkzeug.utils import secure_filename
 from model import Record, FishType, Fish, SearchHistory
 from model import User
@@ -45,8 +46,13 @@ def upload_picture():
     if not fish_name_latin:
         return jsonify({'message': 'Fish Latin name is required', 'success': False}), 400
 
-    # 根据 fish_name_latin 查找对应的 FishType 记录
-    fish_type = FishType.query.filter_by(name_latin=fish_name_latin).first()
+    # 先根据 name_cn 进行模糊查找
+    fish_type = FishType.query.filter(or_(
+        func.lower(FishType.name_cn).contains(func.lower(fish_name_latin)),
+        func.lower(FishType.name_latin).contains(func.lower(fish_name_latin))
+    )).first()
+
+    # 如果没有找到,返回错误信息
     if not fish_type:
         return jsonify({'message': 'Fish type not found', 'success': False}), 404
 
@@ -190,12 +196,12 @@ def get_fish_by_fish_type_name():
 
     try:
         with db.session.begin():
-            # 先根据 name_cn 查找 FishType
-            fish_type = FishType.query.filter(func.lower(FishType.name_cn) == func.lower(name)).first()
+            # 先根据 name_cn 进行模糊查找
+            fish_type = FishType.query.filter(func.lower(FishType.name_cn).contains(func.lower(name))).first()
 
-            # 如果没有找到,则根据 name_latin 查找
+            # 如果没有找到,则根据 name_latin 进行模糊查找
             if not fish_type:
-                fish_type = FishType.query.filter(func.lower(FishType.name_latin) == func.lower(name)).first()
+                fish_type = FishType.query.filter(func.lower(FishType.name_latin).contains(func.lower(name))).first()
 
             # 如果 FishType 不存在,返回一个包含错误信息的 JSON 响应
             if not fish_type:

@@ -7,6 +7,7 @@ from sqlalchemy import text
 
 from db.db import load_config
 
+
 def create_app(env):
     app = Flask(__name__)
     config = load_config(env)
@@ -42,6 +43,7 @@ CORS(app)
 # 创建所有数据库表（在应用程序上下文中）
 with app.app_context():
     db.create_all()
+
 
 @app.route('/')
 def test_db_connection():
